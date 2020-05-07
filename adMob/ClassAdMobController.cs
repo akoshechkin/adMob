@@ -35,6 +35,7 @@ public class ClassAdMobController: ClassDebugConsol {
         ClassDelay.DelayFramesCallBack(this, 2, loadAds);
     }
 
+    // Инициализируем рекламу
     void loadAds() {
         showTextConsol("loadAds");
         if (isShowAds) {
@@ -46,6 +47,7 @@ public class ClassAdMobController: ClassDebugConsol {
         }
     }
 
+    // Скрываем или отображаем на экране дебажный текст
     public override void setDedugVisible(bool isVisible) {
         base.setDedugVisible(isVisible);
         adMobeMenu.setDedugVisible(isVisible);
@@ -53,6 +55,7 @@ public class ClassAdMobController: ClassDebugConsol {
         adMobeInterlevel.setDedugVisible(isVisible);
     }
 
+    // Прекращаем показ рекламы (например, произошла покупка её отключения)
     public void stopShowAds() {
         isShowAds = false;
     }
@@ -64,13 +67,10 @@ public class ClassAdMobController: ClassDebugConsol {
         }
     }
 
-    // Показать межуровневую реклама
-    public void showInterlevel(int numLevel) {
+    // Показать межуровневую рекламу
+    public void showInterlevel() {
         if (isShowAds) { 
-            showTextConsol("showInterlevel numLevel=" + numLevel);
-            if (numLevel > 6) {
-                adMobeInterlevel.tryShowAd();
-            }
+            adMobeInterlevel.tryShowAd();
         }
     }
 
