@@ -44,9 +44,9 @@ public class ClassAdMobeReward : ClassDebugConsol {
 
         string adUnitIdReward = "unused";
 #if UNITY_ANDROID
-        adUnitIdReward = "ca-app-pub-11111";
+        adUnitIdReward = "0000";
 #elif UNITY_IPHONE
-        adUnitIdReward = "ca-app-pub-00000";
+        adUnitIdReward = "1111";
 #endif
 
         // Create an empty ad request.

@@ -12,7 +12,7 @@ public class ClassAdMobeInterlevelAds : ClassBaseAdMobInterstitialAd {
     public static string ON_INTERLEVEL_AD_CLOSED = "ON_INTERLEVEL_AD_CLOSED";
 
     public void init() {
-        init("ca-app-pub-00000", "ca-app-pub-11111");
+        init("ca-app-pub-0000", "ca-app-pub-111");
     }
 
     public override void HandleOnAdClosed(object sender, EventArgs args) {

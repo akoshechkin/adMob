@@ -12,7 +12,7 @@ public class ClassAdMobeMenu : ClassBaseAdMobInterstitialAd {
     public static string ON_MAINMENU_AD_CLOSED = "ON_MAINMENU_AD_CLOSED";
 
     public void init() {
-        init("ca-app-pub-00000", "ca-app-pub-11111");
+        init("ca-app-pub-0000", "ca-app-pub-1111");
     }
 
     public override void HandleOnAdClosed(object sender, EventArgs args) {

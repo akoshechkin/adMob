@@ -8,37 +8,45 @@ using UnityEngine;
 public class ClassAdMobController: ClassDebugConsol {
 
     public bool isNeedShowAdsInMenu = false;
-    private static ClassAdMobController m_Instance = null;
+    private static ClassAdMobController instance = null;
     public ClassAdMobeMenu adMobeMenu = null;
     public ClassAdMobeInterlevelAds adMobeInterlevel  = null;
     public ClassAdMobeReward adMobeReward = null;
-    bool isShowAds = true;
+    bool isAdsAllowed = true;
 
     public static ClassAdMobController GetI {
         get {
-            if (m_Instance == null) {
-                m_Instance = ((GameObject)Instantiate(Resources.Load("adMob"))).GetComponent<ClassAdMobController>();
+            if (instance == null) {
+                instance = ((GameObject)Instantiate(Resources.Load("adMob"))).GetComponent<ClassAdMobController>();
             }
-            return m_Instance;
+            return instance;
         }
     }
 
-    // Initialize the Google Mobile Ads SDK.
-    public void init() {
-        MobileAds.Initialize(initStatus => { });
+    // инициализируем MobileAds
+    public void init(bool isDebugVisible, bool isAllowAds) {
+        if (!IsActive()) {
+            MobileAds.Initialize(initStatus => { });
+        }
+        setDedugVisible(isDebugVisible);
+        allowAds = isAllowAds;
+    }
+
+    public static bool IsActive() {
+        return instance != null;
     }
 
     void Awake() {
         showTextConsol("Awake");
-        m_Instance = this;
+        instance = this;
         DontDestroyOnLoad(gameObject);
         ClassDelay.DelayFramesCallBack(this, 2, loadAds);
     }
 
     // Инициализируем рекламу
     void loadAds() {
-        showTextConsol("loadAds");
-        if (isShowAds) {
+        if (isAdsAllowed) {
+            showTextConsol("loadAds");
             if (isNeedShowAdsInMenu == true) {
                 adMobeMenu.init();
             }
@@ -55,34 +63,35 @@ public class ClassAdMobController: ClassDebugConsol {
         adMobeInterlevel.setDedugVisible(isVisible);
     }
 
-    // Прекращаем показ рекламы (например, произошла покупка её отключения)
-    public void stopShowAds() {
-        isShowAds = false;
+    public bool allowAds {
+        set {
+            isAdsAllowed = value;
+        }
     }
 
     // Показать рекламу в меню
     public void showAdMenu() {
-        if (isShowAds && isNeedShowAdsInMenu) {
+        if (isAdsAllowed && isNeedShowAdsInMenu) {
             adMobeMenu.tryShowAd();
         }
     }
 
     // Показать межуровневую рекламу
     public void showInterlevel() {
-        if (isShowAds) { 
+        if (isAdsAllowed) { 
             adMobeInterlevel.tryShowAd();
         }
     }
 
     // Видеореклама
     public void showRewardedAd() {
-        if (isShowAds) {
+        if (isAdsAllowed) {
             adMobeReward.tryShowAd();
         }
     }
 
     void OnDestroy() {
-        m_Instance = null;
+        instance = null;
     }
 
 }
